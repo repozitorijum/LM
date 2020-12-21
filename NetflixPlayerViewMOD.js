@@ -700,11 +700,7 @@ function ShowsView() {
                     });
                 }
 
-                if (typeof (src.playlists['1080']) !== 'undefined' && Yii2App.playbackStatus === 'limited') {
-                    add1080pButton(this);
-                }
-
-                if (typeof (src.playlists['1080']) !== 'undefined' && Yii2App.playbackStatus === 'unlimited') {
+                if (typeof (src.playlists['1080']) !== 'undefined') {
                     sources.push({
                         src: src.playlists['1080'],
                         label: '1080p',
@@ -892,11 +888,6 @@ function ShowsView() {
 
     $(document).ready(async function () {
         iniEpisodesSwitcher();
-
-        try {
-            let FirstStepResponse = await FirstSecurityStep();
-
-            if (FirstStepResponse.success === true) {
                 window.access = {
                     token: FirstStepResponse.data.accessToken,
                     expires: FirstStepResponse.data.expires
@@ -905,32 +896,9 @@ function ShowsView() {
                 iniPlayerZone();
 
                 return true;
-            }
-        } catch (e) {
-            console.log(e);
-        }
+         
 
-        try {
-            let SecondStepResponse = await SecondSecurityStep();
-
-            console.log(SecondStepResponse);
-
-            if (SecondStepResponse.success === true) {
-
-                window.access = {
-                    token: SecondStepResponse.data.accessToken,
-                    expires: SecondStepResponse.data.expires
-                };
-
-                iniPlayerZone();
-
-                SetCookie('sk', SecondStepResponse.data.sk, Yii2App.HOTLINK_SK_DURATION);
-
-                return true;
-            }
-        } catch (e) {
-            console.log(e);
-        }
+       
 
     });
 }
